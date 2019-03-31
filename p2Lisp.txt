@@ -1,0 +1,51 @@
+(defun removeNILTop (L)
+   (COND ( (NULL  L) nil )
+          ( (NULL (car L)) (removeNILTop (cdr L)  ))
+           (T (CONS (CAR L) (removeNILTop (cdr L)))
+              )
+          )
+      )
+
+(defun removeNILMost (L)
+    (COND  ( (NULL L)nil )
+            ( (NULL (car L)) (removeNILMost (cdr L) ))
+             ( (ATOM (car L)) (CONS (car L) (removeNILMost (cdr L))))
+              (T(CONS (removeNILTop (car L)) (removeNILMost (cdr L))))
+             )
+            )
+           
+          
+;(trace removeNILTop)
+;(trace removeNILMost)
+;(removeNILMost '(nil (x t y) (g g)))
+
+(defun reverseTop (L)
+    (COND ( (NULL  L) nil)
+          (T(APPEND(reverseTop (cdr L)) (list (car L))))
+    )
+)
+
+;(trace reverseTop)
+;l(reverseTop `(x y 6 (yeat) 7 job (schloob)))
+
+(defun reverseAll (L)
+    (COND ( (NULL (cdr L)) (list(car L)))
+          ( (listp (car L)) (APPEND(reverseAll (cdr L)) (reverseAll(car L))))    
+          (T(APPEND (reverseAll (cdr L)) (list (car L))))
+    )
+)
+
+;(trace reverseAll)
+;(reverseAll `(x (Y Z (A)) (W)))
+
+(defun lastele (L)
+    (cdr (reverseTop(cdr L))))
+
+(defun palindrome (L)
+    (COND ( (NULL L) )
+          ( (EQL (CAR (reverseTop L)) (CAR L))
+          (palindrome (lastele L)))
+    )
+)
+     
+;(trace palindrome)
